@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Component
+@SuppressWarnings("all")
 public class AccessLogFilter extends ZuulFilter {
     @Override
     public String filterType() {
@@ -33,7 +34,7 @@ public class AccessLogFilter extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
-        RequestContext ctx = RequestContext.getCurrentContext();;
+        RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String uri = request.getRequestURI();
         Long startTime = (Long) ctx.get("startTime");
