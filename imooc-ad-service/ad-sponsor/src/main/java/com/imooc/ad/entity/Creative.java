@@ -14,7 +14,8 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * Created by Qinyi.
+ * @author chenqiang
+ * @create 2020-06-08 18:47
  */
 @Data
 @NoArgsConstructor

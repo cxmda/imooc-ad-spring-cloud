@@ -13,7 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by Qinyi.
+ * @author chenqiang
+ * @create 2020-06-08 18:47
  */
 @Data
 @NoArgsConstructor
