@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
+ * 测试数据
  * @author chen
  * @create 2020-06-07 14:13
  */
