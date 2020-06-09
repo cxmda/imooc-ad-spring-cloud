@@ -1,8 +1,8 @@
 package com.imooc.ad.service.impl;
 
 import com.imooc.ad.constant.Constants;
-import com.imooc.ad.constant.CreateUserRequest;
-import com.imooc.ad.constant.CreateUserResponse;
+import com.imooc.ad.vo.CreateUserRequest;
+import com.imooc.ad.vo.CreateUserResponse;
 import com.imooc.ad.dao.AdUserRepository;
 import com.imooc.ad.entity.AdUser;
 import com.imooc.ad.exception.AdException;
@@ -12,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
 
 /**
  * @author chenqiang

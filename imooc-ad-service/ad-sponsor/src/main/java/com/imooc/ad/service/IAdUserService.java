@@ -1,7 +1,7 @@
 package com.imooc.ad.service;
 
-import com.imooc.ad.constant.CreateUserRequest;
-import com.imooc.ad.constant.CreateUserResponse;
+import com.imooc.ad.vo.CreateUserRequest;
+import com.imooc.ad.vo.CreateUserResponse;
 import com.imooc.ad.exception.AdException;
 
 /**

@@ -1,4 +1,4 @@
-package com.imooc.ad.constant;
+package com.imooc.ad.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
