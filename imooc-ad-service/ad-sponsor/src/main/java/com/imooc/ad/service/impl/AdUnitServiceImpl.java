@@ -6,11 +6,13 @@ import com.imooc.ad.dao.AdUnitRepository;
 import com.imooc.ad.dao.unit_condition.AdUnitDistrictRepository;
 import com.imooc.ad.dao.unit_condition.AdUnitItRepository;
 import com.imooc.ad.dao.unit_condition.AdUnitKeyWordRepository;
+import com.imooc.ad.dao.unit_condition.CreativeUnitRepository;
 import com.imooc.ad.entity.AdPlan;
 import com.imooc.ad.entity.AdUnit;
 import com.imooc.ad.entity.unit_condition.AdUnitDistrict;
 import com.imooc.ad.entity.unit_condition.AdUnitIt;
 import com.imooc.ad.entity.unit_condition.AdUnitKeyword;
+import com.imooc.ad.entity.unit_condition.CreativeUnit;
 import com.imooc.ad.exception.AdException;
 import com.imooc.ad.service.IAdUnitService;
 import com.imooc.ad.vo.*;
@@ -45,6 +47,9 @@ public class AdUnitServiceImpl implements IAdUnitService {
 
     @Autowired
     private AdUnitDistrictRepository unitDistrictRepository;
+
+    @Autowired
+    private CreativeUnitRepository creativeUnitRepository;
 
     @Override
     @Transactional
@@ -130,6 +135,29 @@ public class AdUnitServiceImpl implements IAdUnitService {
         return new AdUnitDistrictResponse(ids);
     }
 
+    @Override
+    @Transactional
+    public CreativeUnitResponse createCreativeUnit(CreativeUnitRequest request) throws AdException {
+        List<Long> unitIds = request.getCreativeUnits().stream()
+                .map(CreativeUnitRequest.CreativeUnit::getUnitId)
+                .collect(Collectors.toList());
+
+        List<Long> creativeIds = request.getCreativeUnits().stream()
+                .map(CreativeUnitRequest.CreativeUnit::getCreativeId)
+                .collect(Collectors.toList());
+        if (!(isRelatedUnitExist(unitIds) && isRelatedCreativeExist(creativeIds))) {
+            throw new AdException(Constants.ErrorMsg.REQUEST_PARAM_ERROR);
+        }
+        List<CreativeUnit> creativeUnits = new ArrayList<>();
+        request.getCreativeUnits().stream()
+                .forEach(i -> creativeUnits.add(new CreativeUnit(i.getUnitId(), i.getCreativeId())));
+        List<Long> ids = creativeUnitRepository.saveAll(creativeUnits).stream()
+                .map(CreativeUnit::getId)
+                .collect(Collectors.toList());
+        return new CreativeUnitResponse(ids);
+    }
+
+    //判断是否有相关联的unit(推广单元)
     private boolean isRelatedUnitExist(List<Long> unitIds) {
         if (CollectionUtils.isEmpty(unitIds)) {
             return false;
@@ -137,4 +165,15 @@ public class AdUnitServiceImpl implements IAdUnitService {
         return unitRepository.findAllById(unitIds).size() ==
                 new HashSet<>(unitIds).size();
     }
+
+    //判断是否有相关联的creative(创意)
+    private boolean isRelatedCreativeExist(List<Long> creativeIds) {
+        if (CollectionUtils.isEmpty(creativeIds)) {
+            return false;
+        }
+        return creativeUnitRepository.findAllById(creativeIds).size() ==
+                new HashSet<>(creativeIds).size();
+    }
+
+
 }
