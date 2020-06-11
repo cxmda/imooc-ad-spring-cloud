@@ -7,3 +7,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://server1:8000/eureka/
+zuul:
+  prefix: /imooc #前缀
+  routes:
+    sponsor:
+      path: /ad-sponsor/**
+      serviceId: eureka-client-ad-sponsor #微服务名字
+      strip-prefix: false #不跳过前缀 http://127.0.0.1:8000/imooc/ad-sponsor/create/adPlan
